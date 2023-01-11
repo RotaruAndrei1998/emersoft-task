@@ -1,11 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import { Inter } from "@next/font/google";
+import Blog from "src/components/blog";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({ posts }) {
   return (
     <>
       <Head>
@@ -14,9 +13,18 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-     <main>
-       tes
+      <main>
+        <Blog posts={posts} />
       </main>
     </>
-  )
+  );
+}
+
+export async function getServerSideProps({ req }) {
+  const url = req.headers["host"].includes("localhost")
+    ? "http://" + req.headers["host"] + "/api/blogs/getPosts"
+    : "https://" + req.headers["host"] + "/api/blogs/getPosts";
+  const result = await fetch(url);
+  const pageProps = await result.json();
+  return { props: { ...pageProps } };
 }

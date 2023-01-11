@@ -18,5 +18,7 @@ export default function handler(req, res) {
 
     _posts = allPosts.slice(position, position + pageSize);
     res.status(200).json({ posts: _posts });
-  } catch (e) {}
+  } catch (e) {
+    res.status(500).json({ e });
+  }
 }
