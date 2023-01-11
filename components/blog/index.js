@@ -1,7 +1,12 @@
 import PostsList from "./posts-list";
 import Post from "./post";
+import usePagination from "../../hooks/usePagination";
+import PaginationContainer from "../pagination/PaginationContainer";
+import PaginationButton from "../pagination/PaginationButton";
 
-const Blog = ({ posts, children }) => {
+const Blog = ({ posts }) => {
+  const { handlePageChange, page, totalPages } = usePagination();
+
   return (
     <main>
       <h1 className="font-bold text-3xl m-auto text-center mt-10">
@@ -23,6 +28,14 @@ const Blog = ({ posts, children }) => {
           />
         ))}
       </PostsList>
+      <PaginationContainer>
+        <PaginationButton onClick={() => handlePageChange(-1)} disabled={page === 1}>
+          Prev
+        </PaginationButton>
+        <PaginationButton onClick={() => handlePageChange(1)} disabled={page === totalPages}>
+          Next
+        </PaginationButton>
+      </PaginationContainer>
     </main>
   );
 };

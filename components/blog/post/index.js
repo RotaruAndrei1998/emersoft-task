@@ -6,7 +6,7 @@ const Post = ({ id, excerpt, slug, title, imageUrl, categories }) => {
       </div>
       <div className="p-5 flex flex-col justify-between flex-grow">
           <div>
-        <button className="text-blue-700 font-semibold">{categories[0]}</button>
+        <button className="text-blue-700 font-semibold">{title}</button>
         <h1 className="my-2.5 font-bold text-2xl">{title}</h1>
         <div>{excerpt}</div>
           </div>

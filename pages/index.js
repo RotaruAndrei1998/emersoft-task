@@ -1,10 +1,12 @@
 import Head from "next/head";
 import { Inter } from "@next/font/google";
 import Blog from "components/blog";
+import PaginationContext from "../context/pagination/PaginationContext";
+import PaginationProvider from "../context/pagination/PaginationProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ posts }) {
+export default function Home({ posts, searchParams, totalPages }) {
   return (
     <>
       <Head>
@@ -13,15 +15,17 @@ export default function Home({ posts }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Blog posts={posts} />
+      <PaginationProvider initialPosts={posts} searchParams={searchParams} initialTotalPages={totalPages}>
+        {(posts) => <Blog posts={posts} />}
+      </PaginationProvider>
     </>
   );
 }
 
 export async function getServerSideProps({ req }) {
   const url = req.headers["host"].includes("localhost")
-    ? "http://" + req.headers["host"] + "/api/blogs/getPosts"
-    : "https://" + req.headers["host"] + "/api/blogs/getPosts";
+    ? "http://" + req.headers["host"] + "/api/blog/getPosts"
+    : "https://" + req.headers["host"] + "/api/blog/getPosts";
   const result = await fetch(url);
   const pageProps = await result.json();
   return { props: { ...pageProps } };
