@@ -1,17 +1,19 @@
-const Search = ({ q, handleSearch }) => {
+import { HiSearch } from "react-icons/hi";
+
+const Search = ({ handleSearch }) => {
   return (
     <div>
-      <div className="flex justify-center items-center px-4 sm:px-6 lg:px-8">
-        <div className="relative">
-          <input
-            type="text"
-            className="h-14 w-96 pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none"
-            placeholder="Search anything..."
-            onChange={(value) => handleSearch(value.target.value)}
-          />
-          <div className="absolute top-4 right-3">
-            <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
-          </div>
+      <div className="relative mt-1 rounded-md shadow-sm w-72 border border-gray-300">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          className="block w-full rounded-md border-gray-300 pl-2 py-3 pr-7 focus:border-indigo-500 focus:ring-indigo-500"
+          placeholder="Search for post title"
+          onChange={(value) => handleSearch(value.target.value)}
+        />
+        <div className="absolute inset-y-0 right-0 flex items-center pr-1">
+          <HiSearch className="w-5 h-5"/>
         </div>
       </div>
     </div>
