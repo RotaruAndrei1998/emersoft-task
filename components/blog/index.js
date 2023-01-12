@@ -34,28 +34,34 @@ const Blog = ({ posts, filterOptions }) => {
           categoryFilter={categoryFilter}
         />
       </FilterSection>
-      <PostsList>
-        {posts.map(({ id, excerpt, slug, title, imageUrl, categories }) => (
-          <Post
-            key={id}
-            excerpt={excerpt}
-            slug={slug}
-            title={title}
-            imageUrl={imageUrl}
-            categories={categories}
-          />
-        ))}
-      </PostsList>
+      {posts?.length > 0 ? (
+        <PostsList>
+          {posts.map(({ id, excerpt, slug, title, imageUrl, categories }) => (
+            <Post
+              key={id}
+              excerpt={excerpt}
+              slug={slug}
+              title={title}
+              imageUrl={imageUrl}
+              categories={categories}
+            />
+          ))}
+        </PostsList>
+      ) : (
+        <div className="m-auto text-center">
+          No results for this specific combination of query!
+        </div>
+      )}
       <PaginationContainer>
         <PaginationButton
           onClick={() => handlePageChange(-1)}
-          disabled={page === 1}
+          disabled={page === 1 || totalPages === 0}
         >
           Prev
         </PaginationButton>
         <PaginationButton
           onClick={() => handlePageChange(1)}
-          disabled={page === totalPages}
+          disabled={page === totalPages || totalPages === 0}
         >
           Next
         </PaginationButton>
