@@ -3,9 +3,19 @@ import Post from "./post";
 import usePagination from "../../hooks/usePagination";
 import PaginationContainer from "../pagination/PaginationContainer";
 import PaginationButton from "../pagination/PaginationButton";
+import FilterSection from "./post/filter-section";
+import Filter from "./post/filter-section/Filter";
+import Search from "./post/filter-section/Search";
 
-const Blog = ({ posts }) => {
-  const { handlePageChange, page, totalPages } = usePagination();
+const Blog = ({ posts, filterOptions }) => {
+  const {
+    handlePageChange,
+    page,
+    totalPages,
+    handleFilterChange,
+    categoryFilter,
+    handleSearch,
+  } = usePagination();
 
   return (
     <main>
@@ -16,6 +26,14 @@ const Blog = ({ posts }) => {
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa libero
         labore natus atque, ducimus sed.{" "}
       </p>
+      <FilterSection>
+        <Search handleSearch={handleSearch} />
+        <Filter
+          filterOptions={filterOptions}
+          handleFilterChange={handleFilterChange}
+          categoryFilter={categoryFilter}
+        />
+      </FilterSection>
       <PostsList>
         {posts.map(({ id, excerpt, slug, title, imageUrl, categories }) => (
           <Post
@@ -29,10 +47,16 @@ const Blog = ({ posts }) => {
         ))}
       </PostsList>
       <PaginationContainer>
-        <PaginationButton onClick={() => handlePageChange(-1)} disabled={page === 1}>
+        <PaginationButton
+          onClick={() => handlePageChange(-1)}
+          disabled={page === 1}
+        >
           Prev
         </PaginationButton>
-        <PaginationButton onClick={() => handlePageChange(1)} disabled={page === totalPages}>
+        <PaginationButton
+          onClick={() => handlePageChange(1)}
+          disabled={page === totalPages}
+        >
           Next
         </PaginationButton>
       </PaginationContainer>

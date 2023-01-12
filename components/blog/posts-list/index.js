@@ -1,5 +1,5 @@
 const PostsList = ({ children }) => {
-  return <div className="flex justify-around min-h-[518px]">{children}</div>;
+  return <div className="grid grid-cols-3 mx-10">{children}</div>;
 };
 
 export default PostsList;

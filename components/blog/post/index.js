@@ -1,9 +1,9 @@
 import CategorySection from "./CategorySection";
 import AuthorSection from "./AuthorSection";
 
-const Post = ({ id, excerpt, slug, title, imageUrl, categories }) => {
+const Post = ({ excerpt, title, imageUrl, categories }) => {
   return (
-    <div className="max-w-[400px] shadow-2xl rounded-2xl border-solid border overflow-hidden flex flex-col">
+    <div className="min-h-[518px] max-w-[400px] shadow-2xl rounded-2xl border-solid border overflow-hidden flex flex-col m-auto">
       <div>
         <img src={imageUrl} className="w-full h-[200px] object-cover" />
       </div>
@@ -13,7 +13,7 @@ const Post = ({ id, excerpt, slug, title, imageUrl, categories }) => {
           <h1 className="my-2.5 font-bold text-2xl">{title}</h1>
           <div>{excerpt}</div>
         </div>
-          <AuthorSection />
+        <AuthorSection />
       </div>
     </div>
   );

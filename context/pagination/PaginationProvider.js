@@ -21,19 +21,34 @@ const PaginationProvider = ({
   useEffect(() => {
     const controller = new AbortController();
 
-    const searchParams = new URLSearchParams(paginationState);
+    let _paginationState = {};
+    Object.entries(paginationState).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        if (value?.length > 0) {
+          _paginationState[key] = value?.map((filter) => filter?.id);
+        }
+      } else if (!!value) {
+        _paginationState[key] = value;
+      }
+    });
 
-    fetch(`/api/blog/getPosts?${searchParams}`)
-      .then((res) =>
-        res.json().then((data) => {
-          setPosts(data?.posts);
-          setTotalPages(data?.totalPages);
-        })
-      )
-      .catch((e) => console.log(e, controller.signal.aborted));
+    const searchParams = new URLSearchParams(_paginationState);
+    const handleGetPosts = async () => {
+      const result = await fetch(`/api/blog/getPosts?${searchParams}`);
+      const data = await result.json();
+      const { posts, totalPages } = data;
+      setPosts(posts || []);
+      setTotalPages(totalPages);
+    };
 
+    try {
+      handleGetPosts();
+    } catch (e) {
+      console.error("Something wrong happened: ", e);
+    }
     return () => controller.abort();
   }, [paginationState]);
+
   return (
     <PaginationContext.Provider
       value={{ paginationState, setPaginationState, totalPages }}

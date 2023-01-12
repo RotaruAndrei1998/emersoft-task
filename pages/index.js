@@ -1,12 +1,11 @@
 import Head from "next/head";
 import { Inter } from "@next/font/google";
 import Blog from "components/blog";
-import PaginationContext from "../context/pagination/PaginationContext";
 import PaginationProvider from "../context/pagination/PaginationProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ posts, searchParams, totalPages }) {
+export default function Home({ posts, searchParams, totalPages, filterOptions }) {
   return (
     <>
       <Head>
@@ -16,7 +15,7 @@ export default function Home({ posts, searchParams, totalPages }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PaginationProvider initialPosts={posts} searchParams={searchParams} initialTotalPages={totalPages}>
-        {(posts) => <Blog posts={posts} />}
+        {(posts) => <Blog posts={posts} filterOptions={filterOptions} />}
       </PaginationProvider>
     </>
   );
